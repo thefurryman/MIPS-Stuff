@@ -96,32 +96,3 @@ exit:
 	li $v0, 10
 	syscall
 	
-	
-	--------------------------------------------------------------------------------------------------------
-	output
-	
-	Enter a digit to be stored into the array: 4
-Enter a digit to be stored into the array: 3
-Enter a digit to be stored into the array: 2
-Enter a digit to be stored into the array: 1
-Enter a digit to be stored into the array: 12
-Enter a digit to be stored into the array: 16
-Enter a digit to be stored into the array: 2
-Enter a digit to be stored into the array: 3
-Enter a digit to be stored into the array: 4
-Enter a digit to be stored into the array: 6
-Enter a digit to be stored into the array: 12
-Enter a digit to be stored into the array: 16
-Enter a digit to be stored into the array: 20
-Enter a digit to be stored into the array: 65
-Enter a digit to be stored into the array: 54
-Enter a digit to be stored into the array: 23
-Enter a digit to be stored into the array: 12
-Enter a digit to be stored into the array: 65
-Enter a digit to be stored into the array: 44
-Enter a digit to be stored into the array: 66
-66
-1
-9
--- program is finished running --
-	
