@@ -26,7 +26,7 @@ readInt:
 	
 trans1:
 	li $t7, 0 #will hold max value
-	li $t6, 99999 #swill hold min value
+	li $t6, 99999 #will hold min value
 	li $s3, 0 #array counter
 	j smallestLargest
 
