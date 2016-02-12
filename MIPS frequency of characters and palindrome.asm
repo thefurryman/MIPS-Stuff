@@ -16,6 +16,7 @@ main:
 	li $s4, 4 #multiply something by 4 since array is elements * 4
 
 readStr:
+	#reads string from user and stores it into $s0
 	li $v0, 4
 	la $a0, prompt
 	syscall
@@ -27,6 +28,8 @@ readStr:
 	syscall
 
 checkLength:
+	#checks size of string and stores into $s2
+	
 	lb $t0, 0($s0)
 	beqz $t0, transition1
 	addi $s2, $s2, 1  #increment length counter
@@ -39,7 +42,8 @@ transition1:
 	b checkFreq
 	
 checkFreq:
-	beqz $s3, transition2
+	#loads each character and will jump to loopLocation afterwards
+	beqz $s3, transition2 #$s3 is string length and will jump to the next part after it reaches 0
 	lb $t0, 0($s0) #load character 
 	addi $s3, $s3, -1
 	addi $s0, $s0, 1
@@ -47,19 +51,25 @@ checkFreq:
 	
 	b checkFreq
 loopLocation:
+	#now that we know what the character (ascii value) is we can find the location in the array and 
+	#increment the element of the index. 508 = 127 * 4, so we multiply the character by 4 to match the array
+	
 	#move $t1, $t0	
 	mulo $t2, $s4, $t0 #multiply asciiz value by 4 to match array
-	lw $s7, asciiArray($t2)
-	addi $s7, $s7, 1
-	sw $s7, asciiArray($t2)
+	lw $s7, asciiArray($t2)  #load the value at the index 
+	addi $s7, $s7, 1	#increment the frequency by 1
+	sw $s7, asciiArray($t2) #store it back into the array
 	
-	jr $ra
+	jr $ra  #return to checkFreq
 transition2:
 	la $s0, asciiArray
 	li $t0, 0
 	b printN
 
 printN:
+	#this and printN2 will print out the frequency of each character, this function specifically locates 
+	#the character frequencies in the array
+	
 	beq $t0, 508, transition3
 	lw $t1, 0($s0)  #load value to $t1 (the value is the number of the particular ascii from the string)
 	add $t0, $t0, 4
@@ -68,6 +78,8 @@ printN:
 	
 	b printN
 printN2:
+	# this is mostly responsible for printing function
+	
 	#load the ascii character
 	div $s0, $s4 #divide array index in memory by 4 to get the ascii value
 	li $v0, 11
@@ -93,6 +105,7 @@ printN2:
 	j printN
 	
 transition3:
+	#reset for palindrome
 	la $s0, strSize
 	li $s1, 2
 	addi $s2, $s2, -1
@@ -106,15 +119,15 @@ palindrome:
 	blt $s2, $s1, returnFalse
 	beqz $s7, returnTrue
 	
-	lb $t0, 0($s0)
+	lb $t0, 0($s0) #start at "left side" of string
 	
-	lb $t1, strSize($s2)
+	lb $t1, strSize($s2)  #start at "right side" of string
 	
 	bne $t0, $t1, returnFalse
 	
-	addi $s0, $s0, 1
-	addi $s2, $s2, -1
-	addi $s7, $s7, -1
+	addi $s0, $s0, 1 #increment left side by 1
+	addi $s2, $s2, -1  #increment right side by -1
+	addi $s7, $s7, -1  #decrease the counter
 	
 	j palindrome
 	
